@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Col, Row, Pagination } from "antd";
 import { Link } from "react-router-dom";
 import "./service.scss";

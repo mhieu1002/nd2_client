@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useState } from 'react'
 import { ArrowUpOutlined } from "@ant-design/icons";
 import "./Scroll.scss";

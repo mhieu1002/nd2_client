@@ -1,4 +1,3 @@
-import React from "react";
 import "./sideBar.scss";
 import img from "../../assets/images/1(5).jpg";
 import { Link } from "react-router-dom";

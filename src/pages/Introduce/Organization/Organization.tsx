@@ -1,4 +1,3 @@
-import React from "react";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
 import img1 from "../../../assets/images/bangiamdoc.png";

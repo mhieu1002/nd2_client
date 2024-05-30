@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Pagination } from "antd";
 import { Link } from "react-router-dom";
 import SideBar from "../../../../components/SideBar/SideBar";

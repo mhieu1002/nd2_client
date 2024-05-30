@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Col, Row, Pagination } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/SideBar";

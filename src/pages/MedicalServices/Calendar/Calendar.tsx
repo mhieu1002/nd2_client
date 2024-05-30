@@ -1,4 +1,3 @@
-import React from "react";
 import { Image } from "antd";
 import { Link } from "react-router-dom";
 import img from "../../../assets/images/KHOA SỨC KHỎE TRẺ EM.png";
