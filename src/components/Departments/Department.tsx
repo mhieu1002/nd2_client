@@ -113,9 +113,8 @@ const Department = () => {
     });
   };
 
-  const handleItemClick = (itemName: string) => {
-    const formattedName = itemName.split(' ').map(encodeURIComponent).join('%20');
-    window.location.href = `/${formattedName}`;
+  const handleItemClick = () => {
+    window.location.href = `/:id`;
   };
 
   const DepartmentColumn: React.FC<Department> = ({ title, items }) => (
@@ -130,7 +129,7 @@ const Department = () => {
           {title} 
         </h3>
         {items.map((item) => (
-          <p key={item} onClick={() => handleItemClick(item)}>
+          <p key={item} onClick={() => handleItemClick()}>
             {item}
           </p>
         ))}
