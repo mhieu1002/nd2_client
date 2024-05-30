@@ -113,10 +113,6 @@ const Department = () => {
     });
   };
 
-  const handleItemClick = () => {
-    window.location.href = `/:id`;
-  };
-
   const DepartmentColumn: React.FC<Department> = ({ title, items }) => (
     <Col md={{ span: 8 }} sm={{ span: 24 }} xs={{ span: 24 }}>
       <div
@@ -125,13 +121,11 @@ const Department = () => {
         }`}
         onClick={() => toggleActive(title)}
       >
-        <h3>
-          {title} 
-        </h3>
+        <h3>{title}</h3>
         {items.map((item) => (
-          <p key={item} onClick={() => handleItemClick()}>
-            {item}
-          </p>
+          <Link to="/:id">
+            <p key={item}>{item}</p>
+          </Link>
         ))}
       </div>
     </Col>

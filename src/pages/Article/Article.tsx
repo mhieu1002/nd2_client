@@ -8,6 +8,17 @@ import {
   CaretRightOutlined,
 } from "@ant-design/icons";
 import SideBar from "../../components/SideBar";
+import img from "../../assets/images/Grall-Hospital.jpg";
+import img2 from "../../assets/images/41_Pano_trien lam 4 the ky Phap - Viet -FINAL-061(1).jpg";
+import img3 from "../../assets/images/sdsds(1).jpg";
+import img4 from "../../assets/images/1(5).jpg";
+import img5 from "../../assets/images/D4wdmhC.jpg";
+import img6 from "../../assets/images/_facebook_1504185329625.jpg";
+import img7 from "../../assets/images/20_big.jpg";
+import img8 from "../../assets/images/15115771056_89d8a692ce_o.jpg";
+import img9 from "../../assets/images/15138793245_e7e31fbe63_o.jpg";
+import img10 from "../../assets/images/uyuy.jpg";
+import img11 from "../../assets/images/BV-nhi-dong.jpg";
 
 const sections = [
   {
@@ -19,12 +30,7 @@ const sections = [
         hiện nay (14 Lý Tự Trọng, P. Bến Nghé, Q.1, TP.HCM).
       </>,
     ],
-    images: [
-      "/src/assets/images/Grall-Hospital.jpg",
-      "/src/assets/images/41_Pano_trien lam 4 the ky Phap - Viet -FINAL-061(1).jpg",
-      "/src/assets/images/sdsds(1).jpg",
-      "/src/assets/images/1(5).jpg",
-    ],
+    images: [img, img2, img3, img4],
   },
   {
     paragraphs: [
@@ -33,7 +39,7 @@ const sections = [
         (Pasteur-Institut) đầu tiên ở ngoài nước Pháp vào năm 1891.
       </>,
     ],
-    images: ["/src/assets/images/D4wdmhC.jpg"],
+    images: [img5],
   },
   {
     paragraphs: [
@@ -42,10 +48,7 @@ const sections = [
         lại trên nền bằng đá. Mọi vật liệu được mang từ Pháp sang.
       </>,
     ],
-    images: [
-      "/src/assets/images/_facebook_1504185329625.jpg",
-      "/src/assets/images/20_big.jpg",
-    ],
+    images: [img6, img7],
   },
   {
     paragraphs: [
@@ -55,7 +58,7 @@ const sections = [
         cả dân bản xứ.
       </>,
     ],
-    images: ["/src/assets/images/15115771056_89d8a692ce_o.jpg"],
+    images: [img8],
   },
   {
     paragraphs: [
@@ -65,7 +68,7 @@ const sections = [
         để vinh danh Giám đốc Y tế Nam Kỳ (bác sĩ Charles Grall).
       </>,
     ],
-    images: ["/src/assets/images/15138793245_e7e31fbe63_o.jpg"],
+    images: [img9],
   },
   {
     paragraphs: [
@@ -79,7 +82,7 @@ const sections = [
         có 560 giường).
       </>,
     ],
-    images: ["/src/assets/images/uyuy.jpg"],
+    images: [img10],
   },
   {
     paragraphs: [
@@ -93,7 +96,7 @@ const sections = [
         Nhi phụ trách khám và điều trị bệnh cho các bé từ 0 đến dưới 16 tuổi.
       </>,
     ],
-    images: ["/src/assets/images/BV-nhi-dong.jpg"],
+    images: [img11],
   },
 ];
 
