@@ -123,7 +123,7 @@ const Department = () => {
       >
         <h3>{title}</h3>
         {items.map((item) => (
-          <Link to="/:id">
+          <Link to="/:id" className="link-list">
             <p key={item}>{item}</p>
           </Link>
         ))}

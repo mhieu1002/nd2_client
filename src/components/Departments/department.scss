@@ -210,10 +210,6 @@
         display: none;
       }
     }
-
-    p ~ p {
-      margin-top: 3px;
-    }
   }
 }
 
@@ -249,4 +245,10 @@
 
 .down-fix {
   display: none;
+}
+
+.link-list {
+  p {
+    margin-top: 2px;
+  }
 }
