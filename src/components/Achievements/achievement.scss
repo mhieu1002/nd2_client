@@ -1,0 +1,73 @@
+@import "../../styles/index.scss";
+
+.achievement {
+  margin-top: 48px;
+  font-family: Arial, sans-serif;
+  background-image: url("../../assets/images/images.jpg");
+  background-size: cover;
+  @include xs {
+    display: none !important;
+  }
+  &-list {
+    padding: 36px 36px 12px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &-item {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      div {
+        border: 1px #fff dotted;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include md {
+          width: 60px;
+          height: 60px;
+        }
+        i {
+          color: #fff;
+          font-size: 36px;
+          @include md {
+            font-size: 24px;
+          }
+          @include xs {
+            font-size: 18px;
+          }
+        }
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 8px;
+        @include md {
+          font-size: 16px;
+        }
+      }
+
+      p {
+        font-size: 12px;
+        text-align: center;
+        padding: 0 6px;
+        line-height: 1.2;
+        @include md {
+          font-size: 11px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+        }
+      }
+    }
+  }
+}
