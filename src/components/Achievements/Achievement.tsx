@@ -1,5 +1,10 @@
 import React from "react";
 import "./achievement.scss";
+import img from "../../assets/images/frontp9_2_1.png";
+import img2 from "../../assets/images/frontp9_2_2.png";
+import img3 from "../../assets/images/frontp9_2_4.png";
+import img4 from "../../assets/images/frontp9_2_5.png";
+import img5 from "../../assets/images/frontp9_2_6.png";
 
 interface AchievementListItemProps {
   icon: string;
@@ -15,7 +20,7 @@ const AchievementListItem: React.FC<AchievementListItemProps> = ({
   return (
     <div className="achievement-list-item">
       <div>
-        <i className={icon}></i>
+        <img src={icon} />
       </div>
       <h1>{number}</h1>
       <hr style={{ width: "50%" }} />
@@ -27,27 +32,27 @@ const AchievementListItem: React.FC<AchievementListItemProps> = ({
 const Achievement: React.FC = () => {
   const items = [
     {
-      icon: "fa-solid fa-syringe",
+      icon: img2,
       number: "35.000",
       description: "CA PHẪU THUẬT/NĂM",
     },
     {
-      icon: "fa-solid fa-stethoscope",
+      icon: img,
       number: "7.100",
       description: "LƯỢT KHÁM/NGÀY",
     },
     {
-      icon: "fa-solid fa-magnifying-glass",
+      icon: img4,
       number: "44",
       description: "CA GHÉP TẠNG",
     },
     {
-      icon: "fa-solid fa-users",
+      icon: img3,
       number: "222",
       description: "TIẾN SĨ, THẠC SĨ, BÁC SĨ CHUYÊN KHOA 1, CHUYÊN KHOA 2",
     },
     {
-      icon: "fa-solid fa-arrow-up-right-dots",
+      icon: img5,
       number: "44",
       description: "NĂM HÌNH THÀNH VÀ PHÁT TRIỂN",
     },
