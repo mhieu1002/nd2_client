@@ -1,33 +1,12 @@
 import React from "react";
 import "./achievement.scss";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import img from "../../assets/images/frontp9_2_1.png";
 import img2 from "../../assets/images/frontp9_2_2.png";
 import img3 from "../../assets/images/frontp9_2_4.png";
 import img4 from "../../assets/images/frontp9_2_5.png";
 import img5 from "../../assets/images/frontp9_2_6.png";
-
-interface AchievementListItemProps {
-  icon: string;
-  number: string;
-  description: string;
-}
-
-const AchievementListItem: React.FC<AchievementListItemProps> = ({
-  icon,
-  number,
-  description,
-}) => {
-  return (
-    <div className="achievement-list-item">
-      <div>
-        <img src={icon} />
-      </div>
-      <h1>{number}</h1>
-      <hr style={{ width: "50%" }} />
-      <p>{description}</p>
-    </div>
-  );
-};
 
 const Achievement: React.FC = () => {
   const items = [
@@ -60,14 +39,37 @@ const Achievement: React.FC = () => {
   return (
     <section className="section achievement">
       <div className="achievement-list">
-        {items.map((item, index) => (
-          <AchievementListItem
-            key={index}
-            icon={item.icon}
-            number={item.number}
-            description={item.description}
-          />
-        ))}
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={10}
+          breakpoints={{
+            769: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+            },
+            993: {
+              slidesPerView: 5,
+              spaceBetween: 20,
+            },
+          }}
+        >
+          {items.map((item, index) => (
+            <SwiperSlide key={index}>
+              <div className="achievement-list-item">
+                <div>
+                  <img src={item.icon} />
+                </div>
+                <h1>{item.number}</h1>
+                <hr
+                  style={{
+                    width: "50%",
+                  }}
+                />
+                <p>{item.description}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );
