@@ -31,6 +31,7 @@ import Train from "../pages/News/Train";
 import { TRoute } from "../types/index";
 import Article from "../pages/Article";
 import Search from "../pages/Search";
+import NotFound from "../pages/NotFound";
 
 const routes: TRoute[] = [
   {
@@ -234,6 +235,7 @@ const MainRoutes = (): React.ReactElement => {
         routes,
         pathPrefix: "",
       })}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

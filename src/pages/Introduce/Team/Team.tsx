@@ -13,6 +13,7 @@ import img5 from "../../../assets/images/bacsi5.jpg";
 import img6 from "../../../assets/images/bacsi6.jpg";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
+
 import { Grid, Pagination } from "swiper/modules";
 
 const { Search } = Input;
