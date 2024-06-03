@@ -238,7 +238,7 @@
       border-top-right-radius: 10px;
     }
     p {
-      display: block;
+      display: -webkit-box;
     }
   }
 }
@@ -250,5 +250,6 @@
 .link-list {
   p {
     margin-top: 2px;
+
   }
 }

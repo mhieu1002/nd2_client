@@ -327,8 +327,12 @@ const Header = () => {
             </Link>
           </div>
         </div>
-        <div className="header-menu" onClick={toggleMenu}>
-          <i className="fa-solid fa-bars"></i>
+        <div className="header-menu">
+          {/* <i
+            className="fa-solid fa-magnifying-glass"
+            style={{ marginRight: "16px" }}
+          ></i> */}
+          <i className="fa-solid fa-bars" onClick={toggleMenu}></i>
         </div>
       </div>
       <div
