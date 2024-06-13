@@ -25,8 +25,8 @@ const Achievement: React.FC = () => {
   }
 
   const formatNumber = (numberString: string) => {
-    const number = parseFloat(numberString); 
-    return number.toLocaleString("vi-VN"); 
+    const number = parseFloat(numberString);
+    return number.toLocaleString("vi-VN");
   };
 
   return (
@@ -46,22 +46,24 @@ const Achievement: React.FC = () => {
             },
           }}
         >
-          {statisticals?.data.map((item: StatisticalItem, index: number) => (
-            <SwiperSlide key={index}>
-              <div className="achievement-list-item">
-                <div>
-                  <img src={`http://localhost:4646${item.icon}`} />
+          {statisticals?.data
+            .slice(0, 5)
+            .map((item: StatisticalItem, index: number) => (
+              <SwiperSlide key={index}>
+                <div className="achievement-list-item">
+                  <div>
+                    <img src={`http://localhost:4646${item.icon}`} />
+                  </div>
+                  <h1>{formatNumber(item.figures)}</h1>
+                  <hr
+                    style={{
+                      width: "50%",
+                    }}
+                  />
+                  <p>{item.title}</p>
                 </div>
-                <h1>{formatNumber(item.figures)}</h1>
-                <hr
-                  style={{
-                    width: "50%",
-                  }}
-                />
-                <p>{item.title}</p>
-              </div>
-            </SwiperSlide>
-          ))}
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
     </section>

@@ -3,6 +3,17 @@
   @include lg {
     display: none;
   }
+  &-listbox {
+    border-radius: 12px;
+    margin-top: 12px;
+    width: 100%;
+    border: 1px solid #000;
+
+    img {
+      width: 100%;
+      border-radius: 12px;
+    }
+  }
   &-title {
     display: flex;
     justify-content: center;
