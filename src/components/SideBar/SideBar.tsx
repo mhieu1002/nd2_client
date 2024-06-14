@@ -89,6 +89,19 @@ const SideBar = () => {
               </div>
             </div>
           </Link>
+          <Link to="/:id">
+            <div className="sidebar-box-item">
+              <div style={{ width: "40%" }}>
+                <img src={img} />
+              </div>
+              <div style={{ marginLeft: "6px", width: "60%" }}>
+                <p style={{ color: "#808080", fontSize: "11px" }}>30/04/2024</p>
+                <p className="sidebar-box-content">
+                  Bảng giá các loại tại phòng khám ngoài giờ
+                </p>
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
       <div className="sidebar-listbox">
