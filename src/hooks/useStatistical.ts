@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { statisticalApi } from "../apis/modules/statisticalApi";
+import {
+  statisticalApi,
+} from "../apis/modules/statisticalApi";
+import { IQueryParams } from "../types/common.type";
 
-const useStatistical = () => {
+const useStatistical = (payload?: IQueryParams) => {
   //getAll
   const {
     data: statisticals,
