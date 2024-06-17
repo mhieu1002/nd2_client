@@ -52,7 +52,10 @@ const Achievement: React.FC = () => {
               <SwiperSlide key={index}>
                 <div className="achievement-list-item">
                   <div>
-                    <img src={`http://localhost:4646${item.icon}`} />
+                    <img
+                      src={`http://localhost:4646${item.icon}`}
+                      alt={item.title}
+                    />
                   </div>
                   <h1>{formatNumber(item.figures)}</h1>
                   <hr
