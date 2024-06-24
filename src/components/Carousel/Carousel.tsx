@@ -31,6 +31,9 @@ const CustomCarousel = () => {
         <SwiperSlide>
           <img src={banner1} alt="Bệnh viện Nhi Đồng 2" />
         </SwiperSlide>
+        <SwiperSlide>
+          <img src={banner1} alt="Bệnh viện Nhi Đồng 2" />
+        </SwiperSlide>
       </Swiper>
     </div>
   );

@@ -1,41 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
-import { statisticalApi } from "../apis/modules/statisticalApi";
+import { doctorApi } from "../apis/modules/doctorApi";
 import { isNil } from "lodash";
 import { IQueryParams } from "../types/common.type";
 
-const useStatistical = (payload: IQueryParams) => {
-  //getAll
+const useDoctor = (payload: IQueryParams) => {
+  //getAll + search
   const {
-    data: statisticals,
+    data: doctors,
     refetch,
     isError,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["statisticals"],
+    queryKey: ["doctors"],
     queryFn: async () => {
-      const response = await statisticalApi.getAll();
-
+      const response = await doctorApi.getAll({});
       const { data } = response;
-
-      return {
-        data,
-      };
+      return { data };
     },
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
 
-  //getById
-  const { data: statistical } = useQuery({
-    queryKey: ["user"],
+  //getByID
+  const { data: doctor } = useQuery({
+    queryKey: ["post"],
     queryFn: async () => {
       if (isNil(payload.id)) return null;
-      const response = await statisticalApi.getById(payload.id);
+      const response = await doctorApi.getById(payload.id);
       const { data } = response;
-      return {
-        data,
-      };
+      return { data };
     },
     refetchOnWindowFocus: false,
     enabled: !isNil(payload.id),
@@ -43,12 +37,12 @@ const useStatistical = (payload: IQueryParams) => {
 
   return {
     refetch,
-    statisticals,
-    statistical,
+    doctors,
+    doctor,
     isError,
     isLoading,
     error,
   };
 };
 
-export { useStatistical };
+export { useDoctor };

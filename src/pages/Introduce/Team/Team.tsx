@@ -1,153 +1,70 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "antd";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
-import img from "../../../assets/images/bacsi.jpg";
-import img2 from "../../../assets/images/bacsi2.jpg";
-import img3 from "../../../assets/images/bacsi3.jpg";
-import img4 from "../../../assets/images/bacsi4.jpg";
-import img5 from "../../../assets/images/bacsi5.jpg";
-import img6 from "../../../assets/images/bacsi6.jpg";
+import { Spin } from "antd";
+import { useDoctor } from "../../../hooks/useDoctor";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
+export type DoctorItem = {
+  image: string;
+  name: string;
+  position: string;
+  specialty: Specialty;
+  status: boolean;
+};
+
+enum Specialty {
+  InternalMedicine = "InternalMedicine", // Chuyên khoa nội
+  SurgicalSpecialty = "SurgicalSpecialty", // Chuyên khoa ngoại
+  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàn
+}
 
 import { Grid, Pagination } from "swiper/modules";
 
 const { Search } = Input;
 
-const specialties = [
-  {
-    title: "Chuyên khoa nội",
-    doctors: [
-      {
-        name: "BS. CK2. Nguyễn Thanh Hải",
-        title: "Trưởng Khoa Khám Bệnh",
-        img: img,
-      },
-      {
-        name: "BS. CK2. Nguyễn Thanh Thiện",
-        title: "Trưởng Khoa Hồi Sức Sơ Sinh",
-        img: img2,
-      },
-      {
-        name: "BS. CK2. Nguyễn Minh Trí Việt",
-        title: "Trưởng Khoa Tim Mạch",
-        img: img3,
-      },
-      {
-        name: "GS. Trần Đông A",
-        title: "Cố Vấn Chuyên Môn",
-        img: img4,
-      },
-      {
-        name: "TS. BS. Nguyễn Lê Trung Hiếu",
-        title: "Trưởng Khoa Thần Kinh",
-        img: img5,
-      },
-      {
-        name: "TS. BS. Nguyễn Văn Lộc",
-        title: "Trưởng Khoa Hồi Sức Tích Cực - Chống Độc",
-        img: img6,
-      },
-      {
-        name: "BS. CK2. Nguyễn Thanh Hải",
-        title: "Trưởng Khoa Khám Bệnh",
-        img: img,
-      },
-      {
-        name: "BS. CK2. Nguyễn Thanh Thiện",
-        title: "Trưởng Khoa Hồi Sức Sơ Sinh",
-        img: img2,
-      },
-      {
-        name: "BS. CK2. Nguyễn Minh Trí Việt",
-        title: "Trưởng Khoa Tim Mạch",
-        img: img3,
-      },
-    ],
-  },
-  {
-    title: "Chuyên khoa ngoại",
-    doctors: [
-      {
-        name: "BS. CK2. Nguyễn Thanh Hải",
-        title: "Trưởng Khoa Khám Bệnh",
-        img: img,
-      },
-      {
-        name: "BS. CK2. Nguyễn Thanh Thiện",
-        title: "Trưởng Khoa Hồi Sức Sơ Sinh",
-        img: img2,
-      },
-      {
-        name: "BS. CK2. Nguyễn Minh Trí Việt",
-        title: "Trưởng Khoa Tim Mạch",
-        img: img3,
-      },
-      {
-        name: "GS. Trần Đông A",
-        title: "Cố Vấn Chuyên Môn",
-        img: img4,
-      },
-      {
-        name: "TS. BS. Nguyễn Lê Trung Hiếu",
-        title: "Trưởng Khoa Thần Kinh",
-        img: img5,
-      },
-      {
-        name: "TS. BS. Nguyễn Văn Lộc",
-        title: "Trưởng Khoa Hồi Sức Tích Cực - Chống Độc",
-        img: img6,
-      },
-      {
-        name: "BS. CK2. Nguyễn Thanh Hải",
-        title: "Trưởng Khoa Khám Bệnh",
-        img: img,
-      },
-    ],
-  },
-  {
-    title: "Cận lâm sàng",
-    doctors: [
-      {
-        name: "BS. CK2. Nguyễn Thanh Hải",
-        title: "Trưởng Khoa Khám Bệnh",
-        img: img,
-      },
-      {
-        name: "BS. CK2. Nguyễn Thanh Thiện",
-        title: "Trưởng Khoa Hồi Sức Sơ Sinh",
-        img: img2,
-      },
-      {
-        name: "BS. CK2. Nguyễn Minh Trí Việt",
-        title: "Trưởng Khoa Tim Mạch",
-        img: img3,
-      },
-      {
-        name: "GS. Trần Đông A",
-        title: "Cố Vấn Chuyên Môn",
-        img: img4,
-      },
-      {
-        name: "TS. BS. Nguyễn Lê Trung Hiếu",
-        title: "Trưởng Khoa Thần Kinh",
-        img: img5,
-      },
-    ],
-  },
-];
-
-const Team = () => {
+const Team: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const { doctors, isLoading, refetch } = useDoctor({});
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  if (isLoading) {
+    return <Spin />;
+  }
 
   const handleSearch = (value: string) => {
     setSearchQuery(value.toLowerCase());
     console.log(searchQuery);
   };
+
+  const specialties = [
+    {
+      title: "Chuyên khoa nội",
+      doctors: doctors?.data?.allDoctor.filter(
+        (doctor: DoctorItem) => doctor.specialty === Specialty.InternalMedicine
+      ),
+    },
+    {
+      title: "Chuyên khoa ngoại",
+      doctors: doctors?.data?.allDoctor.filter(
+        (doctor: DoctorItem) => doctor.specialty === Specialty.SurgicalSpecialty
+      ),
+    },
+    {
+      title: "Cận lâm sàn",
+      doctors: doctors?.data?.allDoctor.filter(
+        (doctor: DoctorItem) => doctor.specialty === Specialty.ClinicalMedicine
+      ),
+    },
+  ];
   return (
     <HelmetProvider>
       <div>
@@ -173,12 +90,14 @@ const Team = () => {
             className="placeholder"
           />
           {specialties.map((specialty, index) => {
-            const filteredDoctors = specialty.doctors.filter((doctor) => {
-              const searchTerms = searchQuery.split(" ");
-              return searchTerms.every((term) =>
-                doctor.name.toLowerCase().includes(term)
-              );
-            });
+            const filteredDoctors = specialty.doctors.filter(
+              (doctor: DoctorItem) => {
+                const searchTerms = searchQuery.split(" ");
+                return searchTerms.every((term) =>
+                  doctor.name.toLowerCase().includes(term)
+                );
+              }
+            );
 
             if (filteredDoctors.length === 0) return null;
 
@@ -208,15 +127,18 @@ const Team = () => {
                   pagination={true}
                   modules={[Grid, Pagination]}
                 >
-                  {filteredDoctors.map((doctor, idx) => (
+                  {filteredDoctors.map((doctor: DoctorItem, idx: number) => (
                     <SwiperSlide key={idx}>
                       <div
                         className="doctors-list"
                         style={{ marginBottom: "12px" }}
                       >
-                        <img src={doctor.img} alt={doctor.name} />
+                        <img
+                          src={`http://localhost:4646${doctor.image}`}
+                          alt={doctor.name}
+                        />
                         <h3>{doctor.name}</h3>
-                        <p>{doctor.title}</p>
+                        <p>{doctor.position}</p>
                       </div>
                     </SwiperSlide>
                   ))}
