@@ -20,7 +20,7 @@ export type DoctorItem = {
 enum Specialty {
   InternalMedicine = "InternalMedicine", // Chuyên khoa nội
   SurgicalSpecialty = "SurgicalSpecialty", // Chuyên khoa ngoại
-  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàn
+  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàng
 }
 
 import { Grid, Pagination } from "swiper/modules";
@@ -49,22 +49,26 @@ const Team: React.FC = () => {
     {
       title: "Chuyên khoa nội",
       doctors: doctors?.data?.allDoctor.filter(
-        (doctor: DoctorItem) => doctor.specialty === Specialty.InternalMedicine
+        (doctor: DoctorItem) =>
+          doctor.specialty === Specialty.InternalMedicine && doctor.status
       ),
     },
     {
       title: "Chuyên khoa ngoại",
       doctors: doctors?.data?.allDoctor.filter(
-        (doctor: DoctorItem) => doctor.specialty === Specialty.SurgicalSpecialty
+        (doctor: DoctorItem) =>
+          doctor.specialty === Specialty.SurgicalSpecialty && doctor.status
       ),
     },
     {
-      title: "Cận lâm sàn",
+      title: "Cận lâm sàng",
       doctors: doctors?.data?.allDoctor.filter(
-        (doctor: DoctorItem) => doctor.specialty === Specialty.ClinicalMedicine
+        (doctor: DoctorItem) =>
+          doctor.specialty === Specialty.ClinicalMedicine && doctor.status
       ),
     },
   ];
+
   return (
     <HelmetProvider>
       <div>

@@ -20,7 +20,7 @@ type PostsDTo = {
 enum Specialty {
   InternalMedicine = "InternalMedicine", // Chuyên khoa nội
   SurgicalSpecialty = "SurgicalSpecialty", // Chuyên khoa ngoại
-  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàn
+  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàng
 }
 
 export type { PostsDTo };

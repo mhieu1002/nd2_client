@@ -17,13 +17,11 @@ export type DoctorItem = {
 enum Specialty {
   InternalMedicine = "InternalMedicine", // Chuyên khoa nội
   SurgicalSpecialty = "SurgicalSpecialty", // Chuyên khoa ngoại
-  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàn
+  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàng
 }
 
 const Doctors: React.FC = () => {
   const { doctors, isLoading, refetch } = useDoctor({});
-
-  console.log(doctors?.data);
 
   useEffect(() => {
     refetch();
@@ -32,6 +30,10 @@ const Doctors: React.FC = () => {
   if (isLoading) {
     return <Spin />;
   }
+
+  const filteredDoctors = doctors?.data?.allDoctor.filter(
+    (doctor: DoctorItem) => doctor.status === true
+  );
 
   return (
     <section className="doctors">
@@ -68,8 +70,8 @@ const Doctors: React.FC = () => {
           }}
           modules={[Autoplay]}
         >
-          {Array.isArray(doctors?.data?.allDoctor) &&
-            doctors?.data?.allDoctor.map((item: DoctorItem, index: number) => (
+          {Array.isArray(filteredDoctors) &&
+            filteredDoctors.map((item: DoctorItem, index: number) => (
               <SwiperSlide key={index}>
                 <div className="doctors-list">
                   <img
