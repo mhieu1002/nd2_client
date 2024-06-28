@@ -1,11 +1,40 @@
-import { useState } from "react";
-import { Col, Row, Pagination } from "antd";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Col, Row, Spin, Pagination } from "antd";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./service.scss";
 import img from "../../../assets/images/1(5).jpg";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { usePosts } from "../../../hooks/usePost";
+import { format } from "date-fns"; // Import format function from date-fns
+import ReactHtmlParser from "react-html-parser"; // Import react-html-parser
 
-const Service = () => {
+type TPostsDto = {
+  title: string;
+  content: string;
+  thumbnail?: string;
+  file?: string;
+  isActive: boolean;
+  groupCategorySlug: string;
+  slug?: string;
+  updatedAt: string;
+};
+
+const Service: React.FC = () => {
+  const location = useLocation();
+  const groupCategorySlug = location.pathname.split("/")[2];
+
+  const { posts, refetch, isLoading } = usePosts({
+    // keyword,
+    groupCategorySlug,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  if (isLoading) {
+    return <Spin />;
+  }
   // Example data array
   const services = new Array(24).fill({
     date: "02/05/2024",

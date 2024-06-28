@@ -1,11 +1,35 @@
-import banner1 from "../../assets/images/banner1.jpg";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Spin } from "antd";
 import "swiper/css/pagination";
+import { useBanner } from "../../hooks/useBanner";
 import { Pagination, Autoplay } from "swiper/modules";
 import "./carousel.scss";
 
-const CustomCarousel = () => {
+export type BannerItem = {
+  image: string;
+  displayName: string;
+  status: boolean;
+};
+
+const CustomCarousel: React.FC = () => {
+  const { banners, isLoading, refetch } = useBanner({});
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  console.log(banners?.data);
+
+  const filteredBanners = banners?.data?.allBanner.filter(
+    (banner: BannerItem) => banner.status === true
+  );
+
   return (
     <div className="carousel">
       <Swiper
@@ -19,21 +43,15 @@ const CustomCarousel = () => {
           disableOnInteraction: false,
         }}
       >
-        <SwiperSlide>
-          <img src={banner1} alt="Bệnh viện Nhi Đồng 2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={banner1} alt="Bệnh viện Nhi Đồng 2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={banner1} alt="Bệnh viện Nhi Đồng 2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={banner1} alt="Bệnh viện Nhi Đồng 2" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={banner1} alt="Bệnh viện Nhi Đồng 2" />
-        </SwiperSlide>
+        {Array.isArray(filteredBanners) &&
+          filteredBanners.map((item: BannerItem, index: number) => (
+            <SwiperSlide key={index}>
+              <img
+                src={`http://localhost:4646${item.image}`}
+                alt={`Hình ảnh ${item.displayName}`}
+              />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );

@@ -85,7 +85,7 @@ const menuItems: { [key: string]: MenuProps["items"] } = {
             {
               key: "2-4-1",
               label: (
-                <Link to="/kham-chua-benh/bang-gia/bang-gia-kham-chua-benh">
+                <Link to="/kham-chua-benh/bang-gia-kham-chua-benh">
                   Bảng giá khám chữa bệnh
                 </Link>
               ),
@@ -93,7 +93,7 @@ const menuItems: { [key: string]: MenuProps["items"] } = {
             {
               key: "2-4-2",
               label: (
-                <Link to="/kham-chua-benh/bang-gia/bang-gia-cac-dich-vu">
+                <Link to="/kham-chua-benh/bang-gia-cac-dich-vu">
                   Bảng giá các dịch vụ
                 </Link>
               ),
@@ -161,7 +161,7 @@ const menuItems: { [key: string]: MenuProps["items"] } = {
             {
               key: "3-7-1",
               label: (
-                <Link to="/tin-tuc/hoat-dong-doan-the/cong-tac-dang">
+                <Link to="/tin-tuc/cong-tac-dang">
                   Công tác đảng
                 </Link>
               ),
@@ -169,7 +169,7 @@ const menuItems: { [key: string]: MenuProps["items"] } = {
             {
               key: "3-7-2",
               label: (
-                <Link to="/tin-tuc/hoat-dong-doan-the/doan-thanh-nien">
+                <Link to="/tin-tuc/doan-thanh-nien">
                   Đoàn thanh niên
                 </Link>
               ),
@@ -177,7 +177,7 @@ const menuItems: { [key: string]: MenuProps["items"] } = {
             {
               key: "3-7-3",
               label: (
-                <Link to="/tin-tuc/hoat-dong-doan-the/cong-doan">
+                <Link to="/tin-tuc/cong-doan">
                   Công đoàn
                 </Link>
               ),
@@ -185,7 +185,7 @@ const menuItems: { [key: string]: MenuProps["items"] } = {
             {
               key: "3-7-4",
               label: (
-                <Link to="/tin-tuc/hoat-dong-doan-the/hoi-cuu-chien-binh">
+                <Link to="/tin-tuc/hoi-cuu-chien-binh">
                   Hội cựu chiến binh
                 </Link>
               ),

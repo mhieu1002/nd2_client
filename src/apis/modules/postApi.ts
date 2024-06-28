@@ -1,14 +1,14 @@
-import { IQueryParams } from "../../types/common.type";
-import axiosInstance from "../configs/apiConfig";
 import qs from "querystringify";
+import { TUsePostDto } from "../../hooks/usePost";
+import axiosInstance from "../configs/apiConfig";
 
-const getAll = async (params: IQueryParams) => {
-  const response = await axiosInstance.get(`/post/?${qs.stringify(params)}`);
+const getAll = async (params: TUsePostDto) => {
+  const response = await axiosInstance.get(`/post?${qs.stringify(params)}`);
   return response;
 };
 
 const getById = async (id: number) => {
-  const response = await axiosInstance.get(`/post/:${id}`);
+  const response = await axiosInstance.get(`/post/${id}`);
   return response;
 };
 

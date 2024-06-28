@@ -1,54 +1,92 @@
 import { useState, useEffect } from "react";
-import { Col, Row, Pagination } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Col, Row, Spin, Pagination } from "antd";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import SideBar from "../../../components/SideBar";
+import { usePosts } from "../../../hooks/usePost";
 import "./specialist.scss";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { format } from "date-fns"; // Import format function from date-fns
+import ReactHtmlParser from "react-html-parser"; // Import react-html-parser
 
 interface SpecialistProps {
   specialty: string;
 }
 
+type TPostsDto = {
+  title: string;
+  content: string;
+  thumbnail?: string;
+  file?: string;
+  isActive: boolean;
+  groupCategorySlug: string;
+  slug?: string;
+  postCategory?: Specialty;
+  updatedAt: string;
+};
+
+enum Specialty {
+  InternalMedicine = "InternalMedicine", // Chuyên khoa nội
+  SurgicalSpecialty = "SurgicalSpecialty", // Chuyên khoa ngoại
+  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàng
+}
+
 const Specialist = ({ specialty }: SpecialistProps) => {
   const navigate = useNavigate();
-  const posts = Array.from({ length: 100 }, (_, i) => ({
-    id: i + 1,
-    date: "30/04/2024",
-    specialty: ["Chuyên khoa ngoại", "Chuyên khoa nội", "Cận lâm sàng"][i % 3],
-    title: `Bài viết ${i + 1}`,
-    content: "Nội dung bài viết",
-  }));
+  const location = useLocation();
+  const groupCategorySlug = location.pathname.split("/")[2];
+  // const [keyword, setKeyword] = useState("");
+  const [currentSpecialty, setCurrentSpecialty] = useState<Specialty | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 10; // Số lượng bài viết trên mỗi trang
+
+  const { posts, refetch, isLoading } = usePosts({
+    // keyword,
+    groupCategorySlug,
+  });
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [specialty]);
+    refetch();
+  }, []);
 
-  const filteredPosts = posts.filter(
-    (post) => post.specialty === specialty || specialty === "all"
-  );
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentPosts = filteredPosts.slice(startIndex, endIndex);
-
-  const handlePageChange = (page: number): void => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
-  };
+  if (isLoading) {
+    return <Spin />;
+  }
 
   const getTitle = () => {
-    if (specialty === "Chuyên khoa ngoại") {
-      return "Chuyên khoa ngoại | Website Bệnh viện nhi đồng 2";
+    switch (specialty) {
+      case "Chuyên khoa ngoại":
+        return "Chuyên khoa ngoại | Website Bệnh viện nhi đồng 2";
+      case "Chuyên khoa nội":
+        return "Chuyên khoa nội | Website Bệnh viện nhi đồng 2";
+      case "Cận lâm sàng":
+        return "Cận lâm sàng | Website Bệnh viện nhi đồng 2";
+      default:
+        return "Các chuyên khoa | Website Bệnh viện nhi đồng 2";
     }
-    if (specialty === "Chuyên khoa nội") {
-      return "Chuyên khoa nội | Website Bệnh viện nhi đồng 2";
-    }
-    if (specialty === "Cận lâm sàng") {
-      return "Cận lâm sàng | Website Bệnh viện nhi đồng 2";
-    }
-    return "Các chuyên khoa | Website Bệnh viện nhi đồng 2";
   };
+
+  // Lọc và hiển thị các bài viết theo chuyên khoa được chọn
+  const filteredPosts = () => {
+    let filteredData = posts?.data?.data;
+
+    if (currentSpecialty) {
+      filteredData = filteredData?.filter(
+        (post: TPostsDto) => post.isActive && post.postCategory === currentSpecialty
+      );
+    } else {
+      filteredData = filteredData?.filter((post: TPostsDto) => post.isActive);
+    }
+
+    return filteredData;
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const slicedData = filteredPosts()?.slice(startIndex, startIndex + pageSize);
+
   return (
     <HelmetProvider>
       <div>
@@ -73,11 +111,13 @@ const Specialist = ({ specialty }: SpecialistProps) => {
                 <Col span={8}>
                   <div
                     className="specialist-button"
-                    onClick={() =>
+                    onClick={() => {
+                      setCurrentSpecialty(Specialty.SurgicalSpecialty);
+                      setCurrentPage(1); 
                       navigate(
                         "/kham-chua-benh/cac-chuyen-khoa/chuyen-khoa-ngoai"
-                      )
-                    }
+                      );
+                    }}
                   >
                     Chuyên khoa ngoại
                   </div>
@@ -85,11 +125,13 @@ const Specialist = ({ specialty }: SpecialistProps) => {
                 <Col span={8}>
                   <div
                     className="specialist-button"
-                    onClick={() =>
+                    onClick={() => {
+                      setCurrentSpecialty(Specialty.InternalMedicine);
+                      setCurrentPage(1); 
                       navigate(
                         "/kham-chua-benh/cac-chuyen-khoa/chuyen-khoa-noi"
-                      )
-                    }
+                      );
+                    }}
                   >
                     Chuyên khoa nội
                   </div>
@@ -97,17 +139,19 @@ const Specialist = ({ specialty }: SpecialistProps) => {
                 <Col span={8}>
                   <div
                     className="specialist-button"
-                    onClick={() =>
-                      navigate("/kham-chua-benh/cac-chuyen-khoa/can-lam-sang")
-                    }
+                    onClick={() => {
+                      setCurrentSpecialty(Specialty.ClinicalMedicine);
+                      setCurrentPage(1); 
+                      navigate("/kham-chua-benh/cac-chuyen-khoa/can-lam-sang");
+                    }}
                   >
                     Cận lâm sàng
                   </div>
                 </Col>
               </Row>
               <div>
-                {currentPosts.map((post) => (
-                  <Link to="/:id" key={post.id} style={{ color: "#000" }}>
+                {slicedData?.map((post: TPostsDto, index: number) => (
+                  <Link to={`/kham-chua-benh/cac-chuyen-khoa/${post.slug}`} key={index} style={{ color: "#000" }}>
                     <div className="specialist-box">
                       <p
                         style={{
@@ -116,12 +160,15 @@ const Specialist = ({ specialty }: SpecialistProps) => {
                           marginBottom: "0.5rem",
                         }}
                       >
-                        {post.date}
+                        {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
+                        {/* Định dạng ngày */}
                       </p>
                       <p style={{ fontWeight: "700", marginBottom: "0.5rem" }}>
                         {post.title}
                       </p>
-                      <p className="specialist-content">{post.content}</p>
+                      <p className="specialist-content">
+                        {ReactHtmlParser(post.content)}
+                      </p>
                     </div>
                   </Link>
                 ))}
@@ -129,7 +176,7 @@ const Specialist = ({ specialty }: SpecialistProps) => {
                   style={{ marginTop: "12px" }}
                   current={currentPage}
                   onChange={handlePageChange}
-                  total={filteredPosts.length}
+                  total={filteredPosts()?.length}
                   pageSize={pageSize}
                   showSizeChanger={false}
                 />

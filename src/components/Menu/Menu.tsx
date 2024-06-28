@@ -64,11 +64,11 @@ const Menu: React.FC<MenuProps> = ({ isMenuVisible, setMenuVisible }) => {
           subItems: [
             {
               title: "Bảng giá khám chữa bệnh",
-              path: "/kham-chua-benh/bang-gia/bang-gia-kham-chua-benh",
+              path: "/kham-chua-benh/bang-gia-kham-chua-benh",
             },
             {
               title: "Bảng giá các dịch vụ",
-              path: "/kham-chua-benh/bang-gia/bang-gia-cac-dich-vu",
+              path: "/kham-chua-benh/bang-gia-cac-dich-vu",
             },
           ],
         },
@@ -100,19 +100,19 @@ const Menu: React.FC<MenuProps> = ({ isMenuVisible, setMenuVisible }) => {
           subItems: [
             {
               title: "Công tác Đảng",
-              path: "/tin-tuc/hoat-dong-doan-the/cong-tac-dang",
+              path: "/tin-tuc/cong-tac-dang",
             },
             {
               title: "Đoàn thanh niên",
-              path: "/tin-tuc/hoat-dong-doan-the/doan-thanh-nien",
+              path: "/tin-tuc/doan-thanh-nien",
             },
             {
               title: "Công đoàn",
-              path: "/tin-tuc/hoat-dong-doan-the/cong-doan",
+              path: "/tin-tuc/cong-doan",
             },
             {
               title: "Hội cựu chiến binh",
-              path: "/tin-tuc/hoat-dong-doan-the/hoi-cuu-chien-binh",
+              path: "/tin-tuc/hoi-cuu-chien-binh",
             },
           ],
         },

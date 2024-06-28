@@ -23,7 +23,7 @@ const SideBar = () => {
         <div className="sidebar-second">
           <div className="sidebar-box">
             <p style={{ marginBottom: "0", fontSize: "14px" }}>
-              TIN TỨC XEM NHIỀU NHẤT
+              TIN TỨC MỚI
             </p>
           </div>
           <Link to="/:id">

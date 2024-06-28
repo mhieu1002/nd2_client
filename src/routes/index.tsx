@@ -76,6 +76,11 @@ const routes: TRoute[] = [
     props: { specialty: "all" },
     subRoutes: [
       {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+      {
         path: "/chuyen-khoa-ngoai",
         element: Specialist,
         layout: PageLayout,
@@ -99,91 +104,217 @@ const routes: TRoute[] = [
     path: "/kham-chua-benh/dich-vu-noi-bat",
     element: Service,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ],
   },
   {
-    path: "/kham-chua-benh/bang-gia/bang-gia-kham-chua-benh",
+    path: "/kham-chua-benh/bang-gia-kham-chua-benh",
     element: HealthCare,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
-    path: "/kham-chua-benh/bang-gia/bang-gia-cac-dich-vu",
+    path: "/kham-chua-benh/bang-gia-cac-dich-vu",
     element: ServicePrice,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/kham-chua-benh/thu-tuc-kham-benh",
     element: Procedure,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/kham-chua-benh/y-hoc-thuong-thuc",
     element: ConventionalMedicine,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/tin-tuc/tin-chuyen-mon",
     element: ProfessionalNews,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/tin-tuc/tuyen-dung",
     element: Recruitment,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/tin-tuc/dao-tao",
     element: Train,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/tin-tuc/chia-se-yeu-thuong",
     element: ShareLove,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/tin-tuc/dau-thau-moi-chao-gia",
     element: Bidding,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/tin-tuc/hop-tac-quoc-te",
     element: InternationalCooperation,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
-    path: "/tin-tuc/hoat-dong-doan-the/cong-tac-dang",
+    path: "/tin-tuc/cong-tac-dang",
     element: PartyWork,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
-    path: "/tin-tuc/hoat-dong-doan-the/doan-thanh-nien",
+    path: "/tin-tuc/doan-thanh-nien",
     element: YouthUnion,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
-    path: "/tin-tuc/hoat-dong-doan-the/cong-doan",
+    path: "/tin-tuc/cong-doan",
     element: Union,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
-    path: "/tin-tuc/hoat-dong-doan-the/hoi-cuu-chien-binh",
+    path: "/tin-tuc/hoi-cuu-chien-binh",
     element: Veterans,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/danh-cho-nhan-vien-y-te/thong-tin-y-hoc-chung-cu",
     element: MedicalInformation,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/danh-cho-nhan-vien-y-te/phac-do-dieu-tri",
     element: TreatmentRegimen,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/danh-cho-nhan-vien-y-te/nghien-cuu-khoa-hoc",
     element: ScientificResearch,
     layout: PageLayout,
+    subRoutes: [
+      {
+        path: "/:slug",
+        element: Article,
+        layout: PageLayout,
+      },
+    ]
   },
   {
     path: "/:title",
