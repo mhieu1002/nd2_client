@@ -45,7 +45,7 @@ const buttonData: DepartmentButtonProps[] = [
     iconClassName: "fa-regular fa-newspaper",
     label: "BẢNG GIÁ",
     bgColorClass: "bg-blue ",
-    path: "/kham-chua-benh/bang-gia/bang-gia-kham-chua-benh",
+    path: "/kham-chua-benh/bang-gia-kham-chua-benh",
   },
   {
     iconClassName: "fa-regular fa-heart",

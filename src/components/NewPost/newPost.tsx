@@ -13,26 +13,23 @@ type TPostsDto = {
   isActive: boolean;
   groupCategorySlug: string;
   slug?: string;
-  postCategory?: Specialty;
   updatedAt: string;
 };
 
-enum Specialty {
-  InternalMedicine = "InternalMedicine", // Chuyên khoa nội
-  SurgicalSpecialty = "SurgicalSpecialty", // Chuyên khoa ngoại
-  ClinicalMedicine = "ClinicalMedicine", // Cận lâm sàng
-}
-
 const NewPost: React.FC = () => {
   const location = useLocation();
-  const groupCategorySlug = location.pathname.split("/")[2];
+  const currentPath = location.pathname; // Lấy đường dẫn hiện tại
+  console.log(currentPath);
+  const groupCategorySlugfirst = currentPath.split("/")[1];
+  const groupCategorySlug = currentPath.split("/")[2]; // Lấy slug của groupCategory từ đường dẫn
+
   const { posts, refetch, isLoading } = usePosts({
     groupCategorySlug,
   });
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [groupCategorySlug]); // Thêm groupCategorySlug vào dependency của useEffect để refetch khi thay đổi slug
 
   if (isLoading) {
     return <Spin />;
@@ -41,9 +38,6 @@ const NewPost: React.FC = () => {
   // Lọc và sắp xếp các bài viết có isActive là true theo updatedAt mới nhất
   const filteredPosts = posts?.data?.data
     .filter((post: TPostsDto) => post.isActive)
-    .sort((a: TPostsDto, b: TPostsDto) =>
-      a.updatedAt > b.updatedAt ? -1 : 1
-    )
     .slice(0, 6); // Chỉ lấy 6 bài viết mới nhất
 
   return (
@@ -77,7 +71,7 @@ const NewPost: React.FC = () => {
             key={index}
           >
             <Link
-              to={`/kham-chua-benh/cac-chuyen-khoa/${post.slug}`}
+              to={`/${groupCategorySlugfirst}/${groupCategorySlug}/${post.slug}`}
               style={{ color: "#000" }}
             >
               <p style={{ lineHeight: "1.2" }}>

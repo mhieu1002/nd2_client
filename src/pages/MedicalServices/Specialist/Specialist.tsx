@@ -82,6 +82,7 @@ const Specialist = ({ specialty }: SpecialistProps) => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    window.scrollTo(0, 0);
   };
 
   const startIndex = (currentPage - 1) * pageSize;

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Col, Row, Spin, Pagination } from "antd";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./service.scss";
-import img from "../../../assets/images/1(5).jpg";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { usePosts } from "../../../hooks/usePost";
 import { format } from "date-fns"; // Import format function from date-fns
@@ -22,9 +21,10 @@ type TPostsDto = {
 const Service: React.FC = () => {
   const location = useLocation();
   const groupCategorySlug = location.pathname.split("/")[2];
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 16;
 
   const { posts, refetch, isLoading } = usePosts({
-    // keyword,
     groupCategorySlug,
   });
 
@@ -35,20 +35,13 @@ const Service: React.FC = () => {
   if (isLoading) {
     return <Spin />;
   }
-  // Example data array
-  const services = new Array(24).fill({
-    date: "02/05/2024",
-    title: "Dịch vụ chăm sóc bệnh nhân",
-    content:
-      "Với 06 nội dung chuyên môn liên quan đến Sốt co giật và động kinh ở trẻ em được trình bày bởi các chuyên gia của Liên chi Hội Thần kinh học, Đại học Y Dược TP.HCM, Trường Đại học Y khoa Phạm Ngọc Thạch, Hội thảo Khoa học “Sốt co giật và động kinh” – Hội thảo khoa học thưởng niên của Bệnh viện Nhi đồng 2 dành cho các y bác sĩ sẽ diễn ra vào ngày 04/05/2024.",
-  });
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 16;
+  const filteredPosts = posts?.data?.data.filter(
+    (post: TPostsDto) => post.isActive
+  );
 
-  const currentServices = services.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
+  const firstActivePost = posts?.data?.data.find(
+    (post: TPostsDto) => post.isActive
   );
 
   const handlePageChange = (page: number): void => {
@@ -56,6 +49,18 @@ const Service: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
+  const activePosts = posts?.data?.data.filter(
+    (post: TPostsDto) => post.isActive
+  );
+
+  const postsFromSecond = activePosts.slice(1, 5); // Lấy từ index 1 đến index 4 (4 bài viết)
+
+  // Calculate start and end index for pagination
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentPosts = filteredPosts.slice(startIndex, endIndex);
+
+  console.log(firstActivePost);
   return (
     <HelmetProvider>
       <div>
@@ -74,85 +79,70 @@ const Service: React.FC = () => {
           <div className="fix-none" style={{ marginBottom: "24px" }}>
             <Row gutter={[24, 24]}>
               <Col span={12}>
-                <Link to="/:id">
-                  <div
-                    className="service"
-                    style={{
-                      backgroundImage: `url("/src/assets/images/1(5).jpg")`,
-                    }}
+                {firstActivePost && (
+                  <Link
+                    to={`/kham-chua-benh/dich-vu-noi-bat/${firstActivePost.slug}`}
                   >
-                    DỊCH VỤ MỔ NỘI SOI PHƯƠNG PHÁP MỚI
-                  </div>
-                </Link>
+                    <div
+                      className="service"
+                      style={{
+                        backgroundImage: `url(http://localhost:4646${firstActivePost.thumbnail.replace(
+                          /\\/g,
+                          "/"
+                        )})`,
+                      }}
+                    >
+                      {firstActivePost.title}
+                    </div>
+                  </Link>
+                )}
               </Col>
               <Col span={12}>
                 <Row gutter={[8, 8]}>
-                  <Col span={12}>
-                    <Link to="/:id">
-                      <div
-                        className="service-outstanding"
-                        style={{
-                          backgroundImage: `url("/src/assets/images/1(5).jpg")`,
-                        }}
-                      >
-                        Dịch vụ chăm sóc người bệnh đặc biệt tại nhà
-                      </div>
-                    </Link>
-                  </Col>
-                  <Col span={12}>
-                    <Link to="/:id">
-                      <div
-                        className="service-outstanding"
-                        style={{
-                          backgroundImage: `url("/src/assets/images/_facebook_1504185329625.jpg")`,
-                        }}
-                      >
-                        dịch vụ thẩm mỹ
-                      </div>
-                    </Link>
-                  </Col>
-                  <Col span={12}>
-                    <Link to="/:id">
-                      <div
-                        className="service-outstanding"
-                        style={{
-                          backgroundImage: `url("/src/assets/images/_facebook_1504185329625.jpg")`,
-                        }}
-                      >
-                        dịch vụ mổ nội soi phương pháp mới
-                      </div>
-                    </Link>
-                  </Col>
-                  <Col span={12}>
-                    <Link to="/:id">
-                      <div
-                        className="service-outstanding"
-                        style={{
-                          backgroundImage: `url("/src/assets/images/1(5).jpg")`,
-                        }}
-                      >
-                        Đội ngũ y tế chuyên nghiệp và các dịch vụ
-                      </div>
-                    </Link>
-                  </Col>
+                  {postsFromSecond.map((post: TPostsDto, index: number) => (
+                    <Col key={index} span={12}>
+                      <Link to={`/kham-chua-benh/dich-vu-noi-bat/${post.slug}`}>
+                        <div
+                          className="service-outstanding"
+                          style={{
+                            backgroundImage: post.thumbnail
+                              ? `url(http://localhost:4646${post.thumbnail.replace(
+                                  /\\/g,
+                                  "/"
+                                )})`
+                              : undefined,
+                          }}
+                        >
+                          {post.title}
+                        </div>
+                      </Link>
+                    </Col>
+                  ))}
                 </Row>
               </Col>
             </Row>
           </div>
           <Row gutter={[32, 32]}>
-            {currentServices.map((service, index) => (
+            {currentPosts.map((post: TPostsDto, index: number) => (
               <Col
                 key={index}
                 lg={{ span: 6 }}
                 md={{ span: 8 }}
                 sm={{ span: 12 }}
               >
-                <Link to="/:id">
+                <Link to={`/kham-chua-benh/dich-vu-noi-bat/${post.slug}`}>
                   <div className="service-box">
-                    <img src={img} alt="Service" />
-                    <p className="service-time">{service.date}</p>
-                    <p className="service-title">{service.title}</p>
-                    <p className="service-content">{service.content}</p>
+                    <img
+                      src={`http://localhost:4646${post.thumbnail}`}
+                      alt={post.title}
+                    />
+                    <p className="service-time">
+                      {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
+                    </p>
+                    <p className="service-title">{post.title}</p>
+                    <p className="service-content">
+                      {ReactHtmlParser(post.content)}
+                    </p>
                   </div>
                 </Link>
               </Col>
@@ -168,7 +158,7 @@ const Service: React.FC = () => {
         >
           <Pagination
             current={currentPage}
-            total={services.length}
+            total={filteredPosts.length}
             pageSize={pageSize}
             showSizeChanger={false}
             onChange={handlePageChange}

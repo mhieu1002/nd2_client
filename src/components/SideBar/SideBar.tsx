@@ -1,6 +1,9 @@
+import React, { useEffect } from "react";
 import "./sideBar.scss";
-import img from "../../assets/images/1(5).jpg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { Spin } from "antd";
+import { format } from "date-fns"; // Import format function from date-fns
+import { usePosts } from "../../hooks/usePost";
 import img1 from "../../assets/images/33333333333333(1)(1).png";
 import img2 from "../../assets/images/IUIU.jpg";
 import img3 from "../../assets/images/33333333333333(1).jpg";
@@ -9,7 +12,40 @@ import img5 from "../../assets/images/11111111111111(3).jpg";
 import img6 from "../../assets/images/SASAgffg(4).png";
 import img7 from "../../assets/images/a1d0fe3a4abf43190a0418e302a7ec7d(2).png";
 
-const SideBar = () => {
+type TPostsDto = {
+  title: string;
+  content: string;
+  thumbnail?: string;
+  file?: string;
+  isActive: boolean;
+  groupCategorySlug: string;
+  slug?: string;
+  updatedAt: string;
+};
+
+const SideBar: React.FC = () => {
+  const location = useLocation();
+  const currentPath = location.pathname; // Lấy đường dẫn hiện tại
+  console.log(currentPath);
+  const groupCategorySlugfirst = currentPath.split("/")[1];
+  const groupCategorySlug = currentPath.split("/")[2]; // Lấy slug của groupCategory từ đường dẫn
+
+  const { posts, refetch, isLoading } = usePosts({
+    groupCategorySlug,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [groupCategorySlug]); // Thêm groupCategorySlug vào dependency của useEffect để refetch khi thay đổi slug
+
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  const filteredPosts = posts?.data?.data
+    .filter((post: TPostsDto) => post.isActive)
+    .slice(0, 8); // Chỉ lấy 6 bài viết mới nhất
+
   return (
     <div className="sidebar">
       <div className="sidebar-first">
@@ -22,88 +58,29 @@ const SideBar = () => {
       <div>
         <div className="sidebar-second">
           <div className="sidebar-box">
-            <p style={{ marginBottom: "0", fontSize: "14px" }}>
-              TIN TỨC MỚI
-            </p>
+            <p style={{ marginBottom: "0", fontSize: "14px" }}>TIN TỨC MỚI</p>
           </div>
-          <Link to="/:id">
-            <div className="sidebar-box-item">
-              <div style={{ width: "40%" }}>
-                <img src={img} alt="ảnh nền bài viết" />
+          {filteredPosts.map((post: TPostsDto, index: number) => (
+            <Link
+              to={`/${groupCategorySlugfirst}/${groupCategorySlug}/${post.slug}`}
+              key={index}
+            >
+              <div className="sidebar-box-item">
+                <div style={{ width: "40%" }}>
+                  <img
+                    src={`http://localhost:4646${post.thumbnail}`}
+                    alt={post.title}
+                  />
+                </div>
+                <div style={{ marginLeft: "6px", width: "60%" }}>
+                  <p style={{ color: "#808080", fontSize: "11px" }}>
+                    {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
+                  </p>
+                  <p className="sidebar-box-content">{post.title}</p>
+                </div>
               </div>
-              <div style={{ marginLeft: "6px", width: "60%" }}>
-                <p style={{ color: "#808080", fontSize: "11px" }}>30/04/2024</p>
-                <p className="sidebar-box-content">
-                  Bảng giá các loại tại phòng khám ngoài giờ
-                </p>
-              </div>
-            </div>
-          </Link>
-          <Link to="/:id">
-            <div className="sidebar-box-item">
-              <div style={{ width: "40%" }}>
-                <img src={img} alt="ảnh nền bài viết" />
-              </div>
-              <div style={{ marginLeft: "6px", width: "60%" }}>
-                <p style={{ color: "#808080", fontSize: "11px" }}>30/04/2024</p>
-                <p className="sidebar-box-content">
-                  Bảng giá các loại tại phòng khám ngoài giờ
-                </p>
-              </div>
-            </div>
-          </Link>
-          <Link to="/:id">
-            <div className="sidebar-box-item">
-              <div style={{ width: "40%" }}>
-                <img src={img} alt="ảnh nền bài viết" />
-              </div>
-              <div style={{ marginLeft: "6px", width: "60%" }}>
-                <p style={{ color: "#808080", fontSize: "11px" }}>30/04/2024</p>
-                <p className="sidebar-box-content">
-                  Bảng giá các loại tại phòng khám ngoài giờ
-                </p>
-              </div>
-            </div>
-          </Link>
-          <Link to="/:id">
-            <div className="sidebar-box-item">
-              <div style={{ width: "40%" }}>
-                <img src={img} alt="ảnh nền bài viết" />
-              </div>
-              <div style={{ marginLeft: "6px", width: "60%" }}>
-                <p style={{ color: "#808080", fontSize: "11px" }}>30/04/2024</p>
-                <p className="sidebar-box-content">
-                  Bảng giá các loại tại phòng khám ngoài giờ
-                </p>
-              </div>
-            </div>
-          </Link>
-          <Link to="/:id">
-            <div className="sidebar-box-item">
-              <div style={{ width: "40%" }}>
-                <img src={img} alt="ảnh nền bài viết" />
-              </div>
-              <div style={{ marginLeft: "6px", width: "60%" }}>
-                <p style={{ color: "#808080", fontSize: "11px" }}>30/04/2024</p>
-                <p className="sidebar-box-content">
-                  Bảng giá các loại tại phòng khám ngoài giờ
-                </p>
-              </div>
-            </div>
-          </Link>
-          <Link to="/:id">
-            <div className="sidebar-box-item">
-              <div style={{ width: "40%" }}>
-                <img src={img} alt="ảnh nền bài viết" />
-              </div>
-              <div style={{ marginLeft: "6px", width: "60%" }}>
-                <p style={{ color: "#808080", fontSize: "11px" }}>30/04/2024</p>
-                <p className="sidebar-box-content">
-                  Bảng giá các loại tại phòng khám ngoài giờ
-                </p>
-              </div>
-            </div>
-          </Link>
+            </Link>
+          ))}
         </div>
       </div>
       <div className="sidebar-listbox">
