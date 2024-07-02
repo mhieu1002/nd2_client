@@ -24,11 +24,9 @@ const CustomCarousel: React.FC = () => {
     return <Spin />;
   }
 
-  console.log(banners?.data);
-
-  const filteredBanners = banners?.data?.allBanner.filter(
-    (banner: BannerItem) => banner.status === true
-  );
+  const filteredBanners = banners?.data?.allBanner
+    .filter((banner: BannerItem) => banner.status === true)
+    .slice(0, 5); // Selecting first 5 active banners
 
   return (
     <div className="carousel">
