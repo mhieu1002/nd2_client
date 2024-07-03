@@ -18,8 +18,6 @@ const Achievement: React.FC = () => {
     refetch();
   }, []);
 
-console.log(statisticals?.data)
-
   if (isLoading) {
     return <Spin />;
   }

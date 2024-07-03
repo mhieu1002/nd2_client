@@ -60,7 +60,6 @@ const Service: React.FC = () => {
   const endIndex = startIndex + pageSize;
   const currentPosts = filteredPosts.slice(startIndex, endIndex);
 
-  console.log(firstActivePost);
   return (
     <HelmetProvider>
       <div>

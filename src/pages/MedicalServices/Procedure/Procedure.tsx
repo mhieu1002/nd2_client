@@ -1,27 +1,54 @@
-import { useState } from "react";
-import { Pagination } from "antd";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Spin, Pagination } from "antd";
+import { Link, useLocation } from "react-router-dom";
 import SideBar from "../../../components/SideBar/SideBar";
-import img from "../../../assets/images/1(5).jpg";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { usePosts } from "../../../hooks/usePost";
+import { format } from "date-fns";
+import ReactHtmlParser from "react-html-parser";
 
-const Procedure = () => {
-  const posts = Array.from({ length: 100 }, (_, i) => ({
-    id: i + 1,
-    date: "30/04/2024",
-    title: `Bài viết ${i + 1}`,
-    content: "Nội dung bài viết",
-  }));
+type TPostsDto = {
+  title: string;
+  content: string;
+  thumbnail?: string;
+  file?: string;
+  isActive: boolean;
+  groupCategorySlug: string;
+  slug?: string;
+  updatedAt: string;
+};
+
+const Procedure: React.FC = () => {
+  const location = useLocation();
+  const groupCategorySlug = location.pathname.split("/")[2];
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentPosts = posts.slice(startIndex, endIndex);
 
-  const handlePageChange = (page: number): void => {
+  const { posts, refetch, isLoading } = usePosts({
+    groupCategorySlug,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  const filteredPosts = () => {
+    let filteredData = posts?.data?.data;
+    filteredData = filteredData?.filter((post: TPostsDto) => post.isActive);
+    return filteredData;
+  };
+
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
   };
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const slicedData = filteredPosts()?.slice(startIndex, startIndex + pageSize);
 
   return (
     <HelmetProvider>
@@ -54,17 +81,23 @@ const Procedure = () => {
           <div style={{ display: "flex" }}>
             <div className="w-100" style={{ width: "75%" }}>
               <div>
-                {currentPosts.map((post) => (
-                  <Link to="/:id" key={post.id}>
+                {slicedData.map((post: TPostsDto, index: number) => (
+                  <Link
+                    to={`/kham-chua-benh/thu-tuc-kham-benh/${post.slug}`}
+                    key={index}
+                  >
                     <div className="box-list">
                       <div className="box-list-img">
-                        <img src={img} />
+                        <img src={`http://localhost:4646${post.thumbnail}`} />
                       </div>
                       <div className="box-list-content">
-                        <p className="box-list-content-date">{post.date}</p>
+                        <p className="box-list-content-date">
+                          {" "}
+                          {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
+                        </p>
                         <p className="box-list-content-title">{post.title}</p>
                         <p className="box-list-content-summary">
-                          {post.content}
+                          {ReactHtmlParser(post.content)}
                         </p>
                       </div>
                     </div>
@@ -74,7 +107,7 @@ const Procedure = () => {
                   style={{ marginTop: "12px" }}
                   current={currentPage}
                   onChange={handlePageChange}
-                  total={posts.length}
+                  total={filteredPosts()?.length}
                   pageSize={pageSize}
                   showSizeChanger={false}
                 />
