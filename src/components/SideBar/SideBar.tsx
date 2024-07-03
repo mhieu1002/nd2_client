@@ -44,7 +44,7 @@ const SideBar: React.FC = () => {
 
   const filteredPosts = posts?.data?.data
     .filter((post: TPostsDto) => post.isActive)
-    .slice(0, 8); // Chỉ lấy 6 bài viết mới nhất
+    .slice(0, 8); 
 
   return (
     <div className="sidebar">

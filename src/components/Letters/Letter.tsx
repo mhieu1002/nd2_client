@@ -1,31 +1,44 @@
-import React from "react";
+import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Image } from "antd";
+import { Spin, Image } from "antd";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import "./letter.scss";
-import img from "../../assets/images/thu_cam_on.jpg";
-import img2 from "../../assets/images/2.jpg";
-import img3 from "../../assets/images/3.jpg";
-import img4 from "../../assets/images/4.jpg";
-import img5 from "../../assets/images/5.jpg";
+import { usePosts } from "../../hooks/usePost";
+import { format } from "date-fns";
 
-type SlideData = {
-  imgSrc: string;
-  date: string;
+type TPostsDto = {
   title: string;
+  content: string;
+  thumbnail?: string;
+  file?: string;
+  isActive: boolean;
+  groupCategorySlug: string;
+  slug?: string;
+  updatedAt: string;
 };
 
-const slidesData: SlideData[] = [
-  { imgSrc: img, date: "28/04/2022", title: "Thư cảm ơn của Mẹ Cháu Hòa" },
-  { imgSrc: img2, date: "28/04/2022", title: "Thư cảm ơn của chị Thanh Thủy" },
-  { imgSrc: img3, date: "28/04/2022", title: "Thư cảm ơn chị Nguyễn Thị Tươi" },
-  { imgSrc: img4, date: "28/04/2022", title: "Thư cảm ơn của Mẹ Cháu Hòa" },
-  { imgSrc: img5, date: "28/04/2022", title: "Thư cảm ơn của chị Thanh Thủy" },
-];
-
 const Letter: React.FC = () => {
+  const groupCategorySlug = "chia-se-yeu-thuong";
+
+  const { posts, refetch, isLoading } = usePosts({
+    groupCategorySlug,
+  });
+
+  console.log(posts?.data);
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  if (isLoading) {
+    return <Spin />;
+  }
+
+  const filteredPosts = posts?.data?.data
+    .filter((post: TPostsDto) => post.isActive)
+    .slice(0, 6);
   return (
     <section className="section letter">
       <div className="box letter-box">
@@ -57,20 +70,20 @@ const Letter: React.FC = () => {
             }}
             modules={[Pagination]}
           >
-            {slidesData.map((slide, index) => (
+            {filteredPosts.map((post: TPostsDto, index: number) => (
               <SwiperSlide key={index}>
                 <div className="letter-list">
                   <Image
                     className="img"
-                    src={slide.imgSrc}
-                    alt={`Hình ảnh của ${slide.title}`}
+                    src={`http://localhost:4646${post.thumbnail}`}
+                    alt={`Hình ảnh của ${post.title}`}
                     width="100%"
                     preview={{
                       mask: <span style={{ color: "white" }}>Xem ảnh</span>,
                     }}
                   />
-                  <p>{slide.date}</p>
-                  <h3>{slide.title}</h3>
+                  <p> {format(new Date(post.updatedAt), "dd/MM/yyyy")} </p>
+                  <h3>{post.title}</h3>
                 </div>
               </SwiperSlide>
             ))}
