@@ -30,7 +30,6 @@ const Article: React.FC = () => {
   }, [slug, posts]);
 
   if (isLoading) return <Spin />;
-  console.log(posts)
   return (
     <HelmetProvider>
       {post && (

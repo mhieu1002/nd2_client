@@ -151,10 +151,11 @@ a {
   }
 
   img {
-    width: 90px;
-    height: 75px;
-    object-fit: cover;
+    width: 150px;
+    height: 100px;
+    // object-fit: cover;
     border-radius: 12px;
+    margin-bottom: 6px;
   }
 
   p {

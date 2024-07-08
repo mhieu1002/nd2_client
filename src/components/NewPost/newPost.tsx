@@ -19,7 +19,6 @@ type TPostsDto = {
 const NewPost: React.FC = () => {
   const location = useLocation();
   const currentPath = location.pathname; // Lấy đường dẫn hiện tại
-  console.log(currentPath);
   const groupCategorySlugfirst = currentPath.split("/")[1];
   const groupCategorySlug = currentPath.split("/")[2]; // Lấy slug của groupCategory từ đường dẫn
 
