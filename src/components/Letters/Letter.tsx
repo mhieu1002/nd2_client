@@ -26,8 +26,6 @@ const Letter: React.FC = () => {
     groupCategorySlug,
   });
 
-  console.log(posts?.data);
-
   useEffect(() => {
     refetch();
   }, []);

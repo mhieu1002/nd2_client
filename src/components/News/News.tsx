@@ -28,8 +28,6 @@ const News: React.FC = () => {
     groupCategorySlug,
   });
 
-  console.log(posts?.data);
-
   useEffect(() => {
     refetch();
   }, []);
