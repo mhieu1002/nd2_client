@@ -33,6 +33,8 @@ const SideBar: React.FC = () => {
     groupCategorySlug,
   });
 
+  console.log(posts?.data)
+
   useEffect(() => {
     refetch();
   }, [groupCategorySlug]); // Thêm groupCategorySlug vào dependency của useEffect để refetch khi thay đổi slug

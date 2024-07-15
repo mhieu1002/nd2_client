@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
-import { ClockCircleOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined, FileSyncOutlined } from "@ant-design/icons";
 import { Image, Spin } from "antd";
 import { usePosts } from "../../hooks/usePost";
 import SideBar from "../../components/SideBar";
-import { format } from "date-fns"; // Import format function from date-fns
-import ReactHtmlParser from "react-html-parser"; // Import DomElement for typing
+import { format } from "date-fns";
+import ReactHtmlParser from "react-html-parser";
 import NewPost from "../../components/NewPost";
 
 const Article: React.FC = () => {
@@ -20,6 +20,7 @@ const Article: React.FC = () => {
     slug,
     groupCategorySlug,
   });
+
   useEffect(() => {
     if (posts && posts?.data) {
       const foundPost = posts?.data.data.find(
@@ -30,6 +31,21 @@ const Article: React.FC = () => {
   }, [slug, posts]);
 
   if (isLoading) return <Spin />;
+
+  const openFileInNewTab = (fileUrl: string) => {
+    // Use fetch to get the file as blob
+    fetch(`http://localhost:4646${fileUrl}`)
+      .then(response => response.blob())
+      .then(blob => {
+        // Create a blob URL
+        const url = URL.createObjectURL(blob);
+        // Open the blob URL in a new tab
+        window.open(url, '_blank');
+      })
+      .catch(error => console.error('Error opening file:', error));
+  };
+
+  console.log(post);
   return (
     <HelmetProvider>
       {post && (
@@ -91,18 +107,36 @@ const Article: React.FC = () => {
                     ) {
                       return (
                         <Image
-                          key={node.attribs.src} // Ensure each Image has a unique key
+                          key={node.attribs.src}
                           src={node.attribs.src}
                           alt={node.attribs.alt || ""}
-                          style={{ maxWidth: "100%" }} // Optional: Adjust styling as needed
+                          style={{ maxWidth: "100%" }}
                         />
                       );
                     }
-                    // Return undefined to keep the node unchanged
                     return undefined;
                   },
                 })}
               </div>
+              {post.files &&
+                JSON.parse(post.files).map((file: string, index: number) => (
+                  <div className="files_container" key={index}>
+                    Các file đính kèm:{" "}
+                    <div className="files">
+                      <span className="image-file">
+                        <FileSyncOutlined />
+                      </span>
+                      <span className="title-file">
+                        <span
+                          style={{ cursor: "pointer", color: "blue" }}
+                          onClick={() => openFileInNewTab(file)}
+                        >
+                          {file.split("/").pop()}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                ))}
               <div style={{ paddingTop: "12px", paddingRight: "30px" }}>
                 <p
                   style={{

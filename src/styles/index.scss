@@ -244,9 +244,9 @@ html *::-webkit-scrollbar-track {
   line-height: 1.6; /* Chiều cao dòng */
   color: #333; /* Màu chữ */
   // margin: 0 auto;
-  // p {
-  //   // margin-bottom: 16px; /* Khoảng cách giữa các đoạn văn */
-  // }
+  p {
+    margin-bottom: 0;
+  }
 
   h1,
   h2,
@@ -365,10 +365,12 @@ html *::-webkit-scrollbar-track {
 }
 
 .files_container {
+  margin-top: 24px;
   width: 400px;
   cursor: pointer;
   margin-bottom: 6px;
   .files {
+    margin-top: 12px;
     display: flex;
     height: 66px;
     padding: 8px;
