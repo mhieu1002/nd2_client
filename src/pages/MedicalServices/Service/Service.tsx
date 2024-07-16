@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Row, Spin, Pagination } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./service.scss";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { usePosts } from "../../../hooks/usePost";
@@ -19,6 +19,7 @@ type TPostsDto = {
 };
 
 const Service: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const groupCategorySlug = location.pathname.split("/")[2];
   const [currentPage, setCurrentPage] = useState(1);
@@ -129,7 +130,11 @@ const Service: React.FC = () => {
                 md={{ span: 8 }}
                 sm={{ span: 12 }}
               >
-                <Link to={`/kham-chua-benh/dich-vu-noi-bat/${post.slug}`}>
+                <div
+                  onClick={() => {
+                    navigate(`/kham-chua-benh/dich-vu-noi-bat/${post.slug}`);
+                  }}
+                >
                   <div className="service-box">
                     <img
                       src={`http://localhost:4646${post.thumbnail}`}
@@ -139,11 +144,11 @@ const Service: React.FC = () => {
                       {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
                     </p>
                     <p className="service-title">{post.title}</p>
-                    <p className="service-content">
+                    <div className="service-content">
                       {ReactHtmlParser(post.content)}
-                    </p>
+                    </div>
                   </div>
-                </Link>
+                </div>
               </Col>
             ))}
           </Row>

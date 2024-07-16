@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Spin, Pagination } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/SideBar/SideBar";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { usePosts } from "../../../hooks/usePost";
-import { format } from "date-fns"; 
-import ReactHtmlParser from "react-html-parser"; 
+import { format } from "date-fns";
+import ReactHtmlParser from "react-html-parser";
 
 type TPostsDto = {
   title: string;
@@ -19,6 +19,7 @@ type TPostsDto = {
 };
 
 const Recruitment: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const groupCategorySlug = location.pathname.split("/")[2];
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,7 +83,12 @@ const Recruitment: React.FC = () => {
             <div className="w-100" style={{ width: "75%" }}>
               <div>
                 {slicedData.map((post: TPostsDto, index: number) => (
-                  <Link to={`/tin-tuc/tuyen-dung/${post.slug}`} key={index}>
+                  <div
+                    key={index}
+                    onClick={() => {
+                      navigate(`/tin-tuc/tuyen-dung/${post.slug}`);
+                    }}
+                  >
                     <div className="box-list">
                       <div className="box-list-img">
                         <img src={`http://localhost:4646${post.thumbnail}`} />
@@ -93,12 +99,12 @@ const Recruitment: React.FC = () => {
                           {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
                         </p>
                         <p className="box-list-content-title">{post.title}</p>
-                        <p className="box-list-content-summary">
+                        <div className="box-list-content-summary">
                           {ReactHtmlParser(post.content)}
-                        </p>
+                        </div>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
                 <Pagination
                   style={{ marginTop: "12px" }}

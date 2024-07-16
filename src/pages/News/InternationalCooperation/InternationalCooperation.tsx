@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Spin, Pagination } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/SideBar/SideBar";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { usePosts } from "../../../hooks/usePost";
@@ -19,6 +19,7 @@ type TPostsDto = {
 };
 
 const InternationalCooperation: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const groupCategorySlug = location.pathname.split("/")[2];
   const [currentPage, setCurrentPage] = useState(1);
@@ -83,9 +84,11 @@ const InternationalCooperation: React.FC = () => {
             <div className="w-100" style={{ width: "75%" }}>
               <div>
                 {slicedData.map((post: TPostsDto, index: number) => (
-                  <Link
-                    to={`/tin-tuc/hop-tac-quoc-te/${post.slug}`}
+                  <div
                     key={index}
+                    onClick={() => {
+                      navigate(`/tin-tuc/hop-tac-quoc-te/${post.slug}`);
+                    }}
                   >
                     <div className="box-list">
                       <div className="box-list-img">
@@ -97,12 +100,12 @@ const InternationalCooperation: React.FC = () => {
                           {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
                         </p>
                         <p className="box-list-content-title">{post.title}</p>
-                        <p className="box-list-content-summary">
+                        <div className="box-list-content-summary">
                           {ReactHtmlParser(post.content)}
-                        </p>
+                        </div>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
                 <Pagination
                   style={{ marginTop: "12px" }}

@@ -42,7 +42,6 @@ const Team: React.FC = () => {
 
   const handleSearch = (value: string) => {
     setSearchQuery(value.toLowerCase());
-    console.log(searchQuery);
   };
 
   const specialties = [

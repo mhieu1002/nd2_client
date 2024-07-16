@@ -36,6 +36,7 @@ const usePosts = (payload: TUsePostDto) => {
     },
     refetchOnWindowFocus: false,
     enabled:
+      !isNil(payload.keyword) ||
       !isNil(payload.slug) ||
       !isNil(payload.groupCategorySlug),
   });

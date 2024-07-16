@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Spin, Pagination } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/SideBar/SideBar";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { usePosts } from "../../../hooks/usePost";
@@ -19,6 +19,7 @@ type TPostsDto = {
 };
 
 const MedicalInformation: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const groupCategorySlug = location.pathname.split("/")[2];
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,26 +83,30 @@ const MedicalInformation: React.FC = () => {
             <div className="w-100" style={{ width: "75%" }}>
               <div>
                 {slicedData.map((post: TPostsDto, index: number) => (
-                  <Link
-                    to={`/danh-cho-nhan-vien-y-te/thong-tin-y-hoc-chung-cu/${post.slug}`}
+                  <div
                     key={index}
+                    onClick={() => {
+                      navigate(
+                        `/danh-cho-nhan-vien-y-te/thong-tin-y-hoc-chung-cu/${post.slug}`
+                      );
+                    }}
                   >
                     <div className="box-list">
                       <div className="box-list-img">
                         <img src={`http://localhost:4646${post.thumbnail}`} />
                       </div>
                       <div className="box-list-content">
-                        <p className="box-list-content-date">
+                        <div className="box-list-content-date">
                           {" "}
                           {format(new Date(post.updatedAt), "dd/MM/yyyy")}{" "}
-                        </p>
+                        </div>
                         <p className="box-list-content-title">{post.title}</p>
                         <p className="box-list-content-summary">
                           {ReactHtmlParser(post.content)}
                         </p>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
                 <Pagination
                   style={{ marginTop: "12px" }}

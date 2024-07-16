@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
 import { ClockCircleOutlined, FileSyncOutlined } from "@ant-design/icons";
-import { Image, Spin } from "antd";
+import { Spin } from "antd";
 import { usePosts } from "../../hooks/usePost";
 import SideBar from "../../components/SideBar";
 import { format } from "date-fns";
@@ -45,7 +45,6 @@ const Article: React.FC = () => {
       .catch(error => console.error('Error opening file:', error));
   };
 
-  console.log(post);
   return (
     <HelmetProvider>
       {post && (
@@ -98,25 +97,7 @@ const Article: React.FC = () => {
                 </p>
               </div>
               <div className="article">
-                {ReactHtmlParser(post.content, {
-                  transform: (node) => {
-                    if (
-                      node.type === "tag" &&
-                      node.name === "img" &&
-                      node.attribs
-                    ) {
-                      return (
-                        <Image
-                          key={node.attribs.src}
-                          src={node.attribs.src}
-                          alt={node.attribs.alt || ""}
-                          style={{ maxWidth: "100%" }}
-                        />
-                      );
-                    }
-                    return undefined;
-                  },
-                })}
+                {ReactHtmlParser(post.content)}
               </div>
               {post.files &&
                 JSON.parse(post.files).map((file: string, index: number) => (
