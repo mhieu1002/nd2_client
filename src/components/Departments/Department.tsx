@@ -13,7 +13,7 @@ type DepartmentButtonProps = {
 
 type Department = {
   title: string;
-  items: string[];
+  items: { name: string; link: string }[];
 };
 
 const DepartmentButton: React.FC<DepartmentButtonProps> = ({
@@ -65,37 +65,40 @@ const departments: Department[] = [
   {
     title: "CHUYÊN KHOA NỘI",
     items: [
-      "Tiêu hoá",
-      "Dinh Dưỡng",
-      "Tim mạch",
-      "Hô hấp",
-      "Sơ sinh",
-      "Tâm lý",
-      "Vật lý trị liệu",
+      { name: "Tiêu hoá", link: "/tieu-hoa" },
+      { name: "Dinh Dưỡng", link: "/dinh-duong" },
+      { name: "Tim mạch", link: "/tim-mach" },
+      { name: "Hô hấp", link: "/ho-hap" },
+      { name: "Sơ sinh", link: "/so-sinh" },
+      { name: "Tâm lý", link: "/tam-ly" },
+      { name: "Vật lý trị liệu", link: "/vat-ly-tri-lieu" },
     ],
   },
   {
     title: "CHUYÊN KHOA NGOẠI",
     items: [
-      "Ngoại tổng hợp",
-      "Ngoại thần kinh",
-      "Bỏng - Chỉnh trực",
-      "Thận niệu",
-      "Gan - Mật - Tuỵ và Ghép gan",
-      "Liên chuyên khoa",
-      "Hồi sức tích cực và chống độc",
+      { name: "Ngoại tổng hợp", link: "/ngoai-tong-hop" },
+      { name: "Ngoại thần kinh", link: "/ngoai-than-kinh" },
+      { name: "Bỏng - Chỉnh trực", link: "/bong-chinh-truc" },
+      { name: "Thận niệu", link: "/than-nieu" },
+      { name: "Gan - Mật - Tuỵ và Ghép gan", link: "/gan-mat-tuy-va-ghep-gan" },
+      { name: "Liên chuyên khoa", link: "/lien-chuyen-khoa" },
+      {
+        name: "Hồi sức tích cực và chống độc",
+        link: "/hoi-suc-tich-cuc-va-chong-doc",
+      },
     ],
   },
   {
     title: "CẬN LÂM SÀNG",
     items: [
-      "Chẩn đoán hình ảnh",
-      "Vi sinh",
-      "Hoá sinh",
-      "Xét nghiệm huyết học",
-      "Giải phẩu bệnh",
-      "Dược",
-      "Kiểm soát nhiễm khuẩn",
+      { name: "Chẩn đoán hình ảnh", link: "/chan-doan-hinh-anh" },
+      { name: "Vi sinh", link: "/vi-sinh" },
+      { name: "Hoá sinh", link: "/hoa-sinh" },
+      { name: "Xét nghiệm huyết học", link: "/xet-nghiem-huyet-hoc" },
+      { name: "Giải phẩu bệnh", link: "/giai-phau-benh" },
+      { name: "Dược", link: "/duoc" },
+      { name: "Kiểm soát nhiễm khuẩn", link: "/kiem-soat-nhiem-khuan" },
     ],
   },
 ];
@@ -123,8 +126,8 @@ const Department = () => {
       >
         <h3>{title}</h3>
         {items.map((item) => (
-          <Link to="/:id" className="link-list" key={item}>
-            <p>{item}</p>
+          <Link to={item.link} className="link-list" key={item.name}>
+            <p>{item.name}</p>
           </Link>
         ))}
       </div>
