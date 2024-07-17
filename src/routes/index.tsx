@@ -316,11 +316,11 @@ const routes: TRoute[] = [
       },
     ]
   },
-  {
-    path: "/:title",
-    element: Article,
-    layout: PageLayout,
-  },
+  // {
+  //   path: "/:title",
+  //   element: Article,
+  //   layout: PageLayout,
+  // },
   {
     path: "/tim-kiem/:keyword",
     element: Search,

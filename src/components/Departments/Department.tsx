@@ -65,7 +65,7 @@ const departments: Department[] = [
   {
     title: "CHUYÊN KHOA NỘI",
     items: [
-      { name: "Tiêu hoá", link: "/tieu-hoa" },
+      { name: "Tiêu hoá", link: "/tin-tuc/cong-doan/cong-doan-benh-vien-nhi-dong-2-quyet-tam-vi-moi-truong-benh-vien-an-toan,-khong-khoi-thuoc-P7em7r" },
       { name: "Dinh Dưỡng", link: "/dinh-duong" },
       { name: "Tim mạch", link: "/tim-mach" },
       { name: "Hô hấp", link: "/ho-hap" },
