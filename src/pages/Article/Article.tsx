@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useLocation, useParams } from "react-router-dom";
 import { ClockCircleOutlined, FileSyncOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Image, Spin } from "antd";
 import { usePosts } from "../../hooks/usePost";
 import SideBar from "../../components/SideBar";
 import { format } from "date-fns";
@@ -33,16 +33,26 @@ const Article: React.FC = () => {
   if (isLoading) return <Spin />;
 
   const openFileInNewTab = (fileUrl: string) => {
-    // Use fetch to get the file as blob
     fetch(`http://localhost:4646${fileUrl}`)
       .then(response => response.blob())
       .then(blob => {
-        // Create a blob URL
         const url = URL.createObjectURL(blob);
-        // Open the blob URL in a new tab
         window.open(url, '_blank');
       })
       .catch(error => console.error('Error opening file:', error));
+  };
+
+  // Custom transform function
+  const transform = (node: any) => {
+    if (node.type === "tag" && node.name === "img") {
+      return (
+        <Image
+          src={node.attribs.src}
+          alt={node.attribs.alt}
+          style={{ maxWidth: "100%" }}
+        />
+      );
+    }
   };
 
   return (
@@ -97,7 +107,7 @@ const Article: React.FC = () => {
                 </p>
               </div>
               <div className="article">
-                {ReactHtmlParser(post.content)}
+                {ReactHtmlParser(post.content, { transform })}
               </div>
               {post.files &&
                 JSON.parse(post.files).map((file: string, index: number) => (
